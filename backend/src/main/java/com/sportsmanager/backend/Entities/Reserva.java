@@ -14,7 +14,7 @@ public class Reserva {
 
     @ManyToOne
     @JoinColumn(name ="user_id", nullable=false)
-    private User user;
+    private Utilizador utilizador;
 
     @ManyToOne
     @JoinColumn(name ="campo_id", nullable=false)
@@ -33,8 +33,8 @@ public class Reserva {
 
     public Reserva() {}
 
-    public Reserva(User user, Campo campo, LocalTime horaInicio, LocalTime horaFim) {
-        this.user = user;
+    public Reserva(Utilizador utilizador, Campo campo, LocalTime horaInicio, LocalTime horaFim) {
+        this.utilizador = utilizador;
         this.campo = campo;
         this.dataReserva = LocalDate.now();
         this.horaInicio = horaInicio;
@@ -49,12 +49,12 @@ public class Reserva {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Utilizador getUser() {
+        return utilizador;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Utilizador utilizador) {
+        this.utilizador = utilizador;
     }
 
     public Campo getCampo() {

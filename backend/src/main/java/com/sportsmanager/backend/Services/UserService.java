@@ -1,11 +1,11 @@
 package com.sportsmanager.backend.Services;
 
-import com.sportsmanager.backend.Entities.User;
-import com.sportsmanager.backend.Repositories.ReservaRepo;
+import com.sportsmanager.backend.Entities.Utilizador;
 import com.sportsmanager.backend.Repositories.UserRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -15,15 +15,15 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public User criarUser(User user){
-        return userRepo.save(user);
+    public Utilizador criarUser(Utilizador utilizador){
+        return userRepo.save(utilizador);
     }
 
-    public User procurarId(Long id){
-        return userRepo.findById(id).get();
+    public Optional<Utilizador> procurarId(Long id){
+        return userRepo.findById(id);
     }
 
-    public List<User> obterTodosUtilizadores() {
+    public List<Utilizador> obterTodosUtilizadores() {
         return userRepo.findAll();
     }
 }

@@ -1,6 +1,7 @@
 package com.sportsmanager.backend.Controllers;
 
 
+import com.sportsmanager.backend.Dto.UtilizadorCreateDto;
 import com.sportsmanager.backend.Dto.UtilizadorResponseDto;
 import com.sportsmanager.backend.Entities.Utilizador;
 import com.sportsmanager.backend.Services.UserService;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UtilizadorResponseDto> criarUser(@RequestBody Utilizador utilizador){
+    public ResponseEntity<UtilizadorResponseDto> criarUser(@RequestBody UtilizadorCreateDto utilizador){
         UtilizadorResponseDto userDto = userService.criarUser(utilizador);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userDto);

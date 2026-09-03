@@ -1,8 +1,10 @@
 package com.sportsmanager.backend.Controllers;
 
 
+import com.sportsmanager.backend.Dto.UtilizadorResponseDto;
 import com.sportsmanager.backend.Entities.Utilizador;
 import com.sportsmanager.backend.Services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,20 +22,22 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Utilizador> procurarId(@PathVariable Long id){
-        Optional<Utilizador> user = userService.procurarId(id);
+    public ResponseEntity<UtilizadorResponseDto> procurarId(@PathVariable Long id){
+        Optional<UtilizadorResponseDto> user = userService.procurarId(id);
 
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public List<Utilizador> obterTodos(){
+    public List<UtilizadorResponseDto> obterTodos(){
         return userService.obterTodosUtilizadores();
     }
 
     @PostMapping
-    public Utilizador criarUser(@RequestBody Utilizador utilizador){
-        return userService.criarUser(utilizador);
+    public ResponseEntity<UtilizadorResponseDto> criarUser(@RequestBody Utilizador utilizador){
+        UtilizadorResponseDto userDto = userService.criarUser(utilizador);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
     }
 
 }

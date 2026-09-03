@@ -25,7 +25,7 @@ public class CampoController {
         return campoService.obterTodosOsCampos();
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Campo> obterCampoId(@PathVariable Long id){
         Optional<Campo> campo = campoService.obterCampoPorId(id);
 

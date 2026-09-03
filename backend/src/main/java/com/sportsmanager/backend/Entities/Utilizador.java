@@ -19,7 +19,7 @@ public class Utilizador {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "utilizador")
     private List<Reserva> reservas;
 
     public Utilizador(){}

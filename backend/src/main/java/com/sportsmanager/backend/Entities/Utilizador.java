@@ -22,11 +22,31 @@ public class Utilizador {
     @OneToMany(mappedBy = "utilizador")
     private List<Reserva> reservas;
 
+    @Column(nullable = false)
+    private String password;
+
     public Utilizador(){}
 
-    public Utilizador(String name, String email) {
+    public Utilizador(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {

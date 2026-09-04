@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController //Indica que esta classe responde aos pedidos HTTP e converte o resultado para JSON
-@RequestMapping("/users")
+@RequestMapping("/utilizadores")
 public class UserController {
 
     private final UserService userService;

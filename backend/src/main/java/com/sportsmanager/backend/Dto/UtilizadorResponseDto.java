@@ -5,12 +5,12 @@ import com.sportsmanager.backend.Entities.Utilizador;
 public class UtilizadorResponseDto {
     private Long id;
     private String email;
-    private String nome;
+    private String name;
 
     public UtilizadorResponseDto(Long id, String email, String nome) {
         this.id = id;
         this.email = email;
-        this.nome = nome;
+        this.name = nome;
     }
 
     public Long getId() {
@@ -29,11 +29,11 @@ public class UtilizadorResponseDto {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = nome;
     }
 }

@@ -1,5 +1,7 @@
 package com.sportsmanager.backend.Services;
 
+import com.sportsmanager.backend.Dto.CampoCreateDto;
+import com.sportsmanager.backend.Dto.CampoResponseDto;
 import com.sportsmanager.backend.Entities.Campo;
 import com.sportsmanager.backend.Repositories.CampoRepo;
 import com.sportsmanager.backend.Repositories.ReservaRepo;
@@ -17,8 +19,14 @@ public class CampoService {
         this.campoRepo = campoRepo;
     }
 
-    public Campo criarCampo(Campo campo){
-        return campoRepo.save(campo);
+    public CampoResponseDto criarCampo(CampoCreateDto campo){
+        Campo campofinal = new Campo(
+                campo.getDesporto(),
+                campo.getNome(),
+                campo.getPrecoPorHora()
+        );
+        Campo campoGuardado = campoRepo.save(campofinal);
+        return converterParaDto(campoRepo.save(campoGuardado));
     }
 
     public List<Campo> obterTodosOsCampos(){
@@ -27,5 +35,14 @@ public class CampoService {
 
     public Optional<Campo> obterCampoPorId(Long id) {
         return campoRepo.findById(id);
+    }
+
+    private CampoResponseDto converterParaDto (Campo campo){
+        return new CampoResponseDto(
+          campo.getId(),
+          campo.getNome(),
+          campo.getTipo(),
+          campo.getPrecoPorHora()
+        );
     }
 }

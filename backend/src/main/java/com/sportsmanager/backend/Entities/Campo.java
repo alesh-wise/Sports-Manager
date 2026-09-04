@@ -29,8 +29,7 @@ public class Campo {
 
     public Campo() {}
 
-    public Campo(Long id, TipoDesporto tipo, String nome,  BigDecimal precoPorHora) {
-        this.id = id;
+    public Campo(TipoDesporto tipo, String nome,  BigDecimal precoPorHora) {
         this.tipo = tipo;
         this.nome = nome;
         this.precoPorHora = precoPorHora;

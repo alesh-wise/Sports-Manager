@@ -48,7 +48,8 @@ public class ReservaService {
         Reserva reservafinal = new  Reserva(
                 user,campo, reserva.getDia(),reserva.getHoraInicio(),reserva.getHoraFim(),total
         );
-        return converterParaDto(reservafinal);
+        Reserva reservaGuardada = reservaRepo.save(reservafinal);
+        return converterParaDto(reservaGuardada);
     }
 
     public List<Reserva> obterReservasUtilizador(Long userId){

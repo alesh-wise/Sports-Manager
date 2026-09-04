@@ -1,6 +1,8 @@
 package com.sportsmanager.backend.Controllers;
 
 
+import com.sportsmanager.backend.Dto.CampoCreateDto;
+import com.sportsmanager.backend.Dto.CampoResponseDto;
 import com.sportsmanager.backend.Entities.Campo;
 import com.sportsmanager.backend.Services.CampoService;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class CampoController {
     }
 
     @PostMapping
-    public Campo CriarCampo(@RequestBody Campo campo){
+    public CampoResponseDto CriarCampo(@RequestBody CampoCreateDto campo){
         return campoService.criarCampo(campo);
     }
 }

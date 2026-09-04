@@ -6,13 +6,15 @@ import com.sportsmanager.backend.Dto.ReservaResponseDto;
 import com.sportsmanager.backend.Entities.Reserva;
 import com.sportsmanager.backend.Services.ReservaService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("reservas")
+@RequestMapping("/reservas")
 public class ReservaController {
 
     private final ReservaService reservaService;
@@ -22,8 +24,9 @@ public class ReservaController {
     }
 
     @PostMapping
-    public ReservaResponseDto criarReserva(@RequestBody ReservaCreateDto reserva){
-        return reservaService.criarReserva(reserva);
+    public ResponseEntity<ReservaResponseDto> criarReserva(@RequestBody ReservaCreateDto reserva){
+        ReservaResponseDto reservaDto= reservaService.criarReserva(reserva);
+        return ResponseEntity.status(HttpStatus.CREATED).body(reservaDto);
     }
 
     @GetMapping("/utilizador/{id}")

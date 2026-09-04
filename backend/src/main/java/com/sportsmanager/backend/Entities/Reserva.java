@@ -2,6 +2,7 @@ package com.sportsmanager.backend.Entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -31,14 +32,26 @@ public class Reserva {
     @Column(nullable = false)
     private LocalTime horaFim;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal precoTotal;
+
     public Reserva() {}
 
-    public Reserva(Utilizador utilizador, Campo campo, LocalTime horaInicio, LocalTime horaFim) {
+    public Reserva(Utilizador utilizador, Campo campo,LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim,  BigDecimal precoTotal) {
         this.utilizador = utilizador;
         this.campo = campo;
-        this.dataReserva = LocalDate.now();
+        this.dataReserva = dataReserva;
         this.horaInicio = horaInicio;
         this.horaFim = horaFim;
+        this.precoTotal = precoTotal;
+    }
+
+    public BigDecimal getPrecoTotal() {
+        return precoTotal;
+    }
+
+    public void setPrecoTotal(BigDecimal precoTotal) {
+        this.precoTotal = precoTotal;
     }
 
     public Long getId() {

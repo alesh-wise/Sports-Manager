@@ -1,6 +1,8 @@
 package com.sportsmanager.backend.Controllers;
 
 
+import com.sportsmanager.backend.Dto.ReservaCreateDto;
+import com.sportsmanager.backend.Dto.ReservaResponseDto;
 import com.sportsmanager.backend.Entities.Reserva;
 import com.sportsmanager.backend.Services.ReservaService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +22,7 @@ public class ReservaController {
     }
 
     @PostMapping
-    public Reserva criarReserva(@RequestBody Reserva reserva){
+    public ReservaResponseDto criarReserva(@RequestBody ReservaCreateDto reserva){
         return reservaService.criarReserva(reserva);
     }
 

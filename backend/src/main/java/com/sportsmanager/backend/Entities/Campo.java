@@ -2,6 +2,7 @@ package com.sportsmanager.backend.Entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -22,12 +23,25 @@ public class Campo {
     @Column(nullable=false)
     private String nome;
 
+    @Column(nullable=false, precision=10, scale=2)
+    private BigDecimal precoPorHora;
+
+
     public Campo() {}
 
-    public Campo(Long id, TipoDesporto tipo, String nome) {
+    public Campo(Long id, TipoDesporto tipo, String nome,  BigDecimal precoPorHora) {
         this.id = id;
         this.tipo = tipo;
         this.nome = nome;
+        this.precoPorHora = precoPorHora;
+    }
+
+    public BigDecimal getPrecoPorHora() {
+        return precoPorHora;
+    }
+
+    public void setPrecoPorHora(BigDecimal precoPorHora) {
+        this.precoPorHora = precoPorHora;
     }
 
     public Long getId() {

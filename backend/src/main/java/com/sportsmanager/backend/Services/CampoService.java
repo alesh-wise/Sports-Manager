@@ -29,12 +29,12 @@ public class CampoService {
         return converterParaDto(campoRepo.save(campoGuardado));
     }
 
-    public List<Campo> obterTodosOsCampos(){
-        return campoRepo.findAll();
+    public List<CampoResponseDto> obterTodosOsCampos(){
+        return campoRepo.findAll().stream().map(this::converterParaDto).toList();
     }
 
-    public Optional<Campo> obterCampoPorId(Long id) {
-        return campoRepo.findById(id);
+    public Optional<CampoResponseDto> obterCampoPorId(Long id) {
+        return campoRepo.findById(id).map(this::converterParaDto);
     }
 
     private CampoResponseDto converterParaDto (Campo campo){

@@ -27,12 +27,12 @@ public class ReservaController {
     }
 
     @GetMapping("/utilizador/{id}")
-    public List<Reserva> obterReservaUtilizador(@PathVariable Long id){
+    public List<ReservaResponseDto> obterReservaUtilizador(@PathVariable Long id){
         return reservaService.obterReservasUtilizador(id);
     }
 
     @GetMapping("/campo/{campoId}")
-    public List<Reserva> porCampoEDia(
+    public List<ReservaResponseDto> porCampoEDia(
             @PathVariable Long campoId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dia) {
         return reservaService.obterReservasCampoDia(campoId, dia);

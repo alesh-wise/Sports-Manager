@@ -52,12 +52,12 @@ public class ReservaService {
         return converterParaDto(reservaGuardada);
     }
 
-    public List<Reserva> obterReservasUtilizador(Long userId){
-        return reservaRepo.findByUserId(userId);
+    public List<ReservaResponseDto> obterReservasUtilizador(Long userId){
+        return reservaRepo.findByUserId(userId).stream().map(this::converterParaDto).toList();
     }
 
-    public List<Reserva> obterReservasCampoDia(Long campoId, LocalDate dia){
-        return reservaRepo.findByCampoIdAndDataReserva(campoId, dia);
+    public List<ReservaResponseDto> obterReservasCampoDia(Long campoId, LocalDate dia){
+        return reservaRepo.findByCampoIdAndDataReserva(campoId, dia).stream().map(this::converterParaDto).toList();
     }
 
 

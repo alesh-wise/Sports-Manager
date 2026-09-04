@@ -23,13 +23,13 @@ public class CampoController {
     }
 
     @GetMapping
-    public List<Campo> obterTodos(){
+    public List<CampoResponseDto> obterTodos(){
         return campoService.obterTodosOsCampos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Campo> obterCampoId(@PathVariable Long id){
-        Optional<Campo> campo = campoService.obterCampoPorId(id);
+    public ResponseEntity<CampoResponseDto> obterCampoId(@PathVariable Long id){
+        Optional<CampoResponseDto> campo = campoService.obterCampoPorId(id);
 
         return campo.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }

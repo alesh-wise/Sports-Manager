@@ -1,12 +1,22 @@
 package com.sportsmanager.backend.Dto;
 
 import com.sportsmanager.backend.Entities.TipoDesporto;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
 public class CampoCreateDto {
+
+    @NotBlank (message ="O campo deve estar identificado")
     private String nome;
+
+
+    @NotNull
     private TipoDesporto desporto;
+
+    @NotNull
+    @DecimalMin(value ="0.01", inclusive = true)
+    @Digits(integer =8,  fraction = 2)
     private BigDecimal precoPorHora;
 
     public CampoCreateDto(String nome, TipoDesporto desporto,  BigDecimal precoPorHora) {

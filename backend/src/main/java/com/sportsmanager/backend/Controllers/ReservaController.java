@@ -5,6 +5,8 @@ import com.sportsmanager.backend.Dto.ReservaCreateDto;
 import com.sportsmanager.backend.Dto.ReservaResponseDto;
 import com.sportsmanager.backend.Entities.Reserva;
 import com.sportsmanager.backend.Services.ReservaService;
+import jakarta.validation.Valid;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,9 @@ public class ReservaController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservaResponseDto> criarReserva(@RequestBody ReservaCreateDto reserva){
-        ReservaResponseDto reservaDto= reservaService.criarReserva(reserva);
+    public ResponseEntity<ReservaResponseDto> criarReserva(@Valid @RequestBody ReservaCreateDto reserva, Authentication authentication){
+        String emailUtilizador = authentication.name();
+        ReservaResponseDto reservaDto= reservaService.criarReserva(reserva,emailUtilizador);
         return ResponseEntity.status(HttpStatus.CREATED).body(reservaDto);
     }
 

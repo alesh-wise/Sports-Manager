@@ -5,6 +5,7 @@ import com.sportsmanager.backend.Dto.CampoCreateDto;
 import com.sportsmanager.backend.Dto.CampoResponseDto;
 import com.sportsmanager.backend.Entities.Campo;
 import com.sportsmanager.backend.Services.CampoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class CampoController {
     }
 
     @PostMapping
-    public ResponseEntity<CampoResponseDto> criarCampo(@RequestBody CampoCreateDto campo){
+    public ResponseEntity<CampoResponseDto> criarCampo(@Valid @RequestBody CampoCreateDto campo){
         CampoResponseDto campoDto= campoService.criarCampo(campo);
         return ResponseEntity.status(HttpStatus.CREATED).body(campoDto);
     }

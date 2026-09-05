@@ -4,6 +4,7 @@ package com.sportsmanager.backend.Controllers;
 import com.sportsmanager.backend.Dto.LoginDto;
 import com.sportsmanager.backend.Dto.LoginResponseDto;
 import com.sportsmanager.backend.Services.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class AuthController {
 
 
     @PostMapping ("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto dto) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto dto) {
 
     String token = authService.authEGerarToken(dto);
 

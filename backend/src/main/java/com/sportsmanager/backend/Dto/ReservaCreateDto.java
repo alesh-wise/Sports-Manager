@@ -1,19 +1,30 @@
 package com.sportsmanager.backend.Dto;
 
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ReservaCreateDto {
 
-    private Long userID;
+    @NotNull
     private Long campoID;
 
+    @FutureOrPresent
     private LocalDate dia;
+
+    @NotNull
     private LocalTime horaInicio;
+
+    @NotNull
     private LocalTime horaFim;
 
-    public ReservaCreateDto(Long userID, Long campoID, LocalDate dia, LocalTime horaFim, LocalTime horaInicio) {
-        this.userID = userID;
+
+    public ReservaCreateDto(){}
+
+    public ReservaCreateDto( Long campoID, LocalDate dia, LocalTime horaFim, LocalTime horaInicio) {
         this.campoID = campoID;
         this.dia = dia;
         this.horaFim = horaFim;
@@ -26,14 +37,6 @@ public class ReservaCreateDto {
 
     public void setCampoID(Long campoID) {
         this.campoID = campoID;
-    }
-
-    public Long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Long userID) {
-        this.userID = userID;
     }
 
     public LocalDate getDia() {

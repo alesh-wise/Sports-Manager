@@ -1,8 +1,20 @@
 package com.sportsmanager.backend.Dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UtilizadorCreateDto {
+
+    @NotBlank(message ="O nome não pode estar vazio")
     private String name;
+
+    @NotBlank(message ="O email é obrigatório")
+    @Email(message ="O formato do email é inválido")
     private String email;
+
+    @NotBlank(message = "A palavra-passe é obrigatória")
+    @Size(min = 6, message = "A palavra-passe tem de ter pelo menos 6 caracteres")
     private String password;
 
     public UtilizadorCreateDto(String name, String email, String password) {

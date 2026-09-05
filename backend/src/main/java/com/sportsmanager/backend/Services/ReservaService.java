@@ -37,11 +37,14 @@ public class ReservaService {
         this.reservaMapper = reservaMapper;
     }
 
-    public ReservaResponseDto criarReserva(ReservaCreateDto reserva){
-        Utilizador user = userRepo.findById(reserva.getUserID()).orElseThrow(()->new EntidadeNaoEncontrada("User não encontrado com o ID"+reserva.getUserID()));
+    public ReservaResponseDto criarReserva(ReservaCreateDto reserva, String emailUtilizador){
+        Utilizador user = userRepo.findByEmail(emailUtilizador).orElseThrow(()->new EntidadeNaoEncontrada("Utilizador não encontrado"));
 
         Campo campo = campoRepo.findById(reserva.getCampoID()).orElseThrow(()-> new EntidadeNaoEncontrada("Campo não encontrado com o ID"+reserva.getCampoID()));
 
+        if (!reserva.getHoraInicio().isBefore(reserva.getHoraFim())) {
+            throw new IllegalArgumentException("A hora de início deve ser anterior à hora de fim.");
+        }
         long minutos = ChronoUnit.MINUTES.between(reserva.getHoraInicio(), reserva.getHoraFim());
 
         BigDecimal duracaoHoras = BigDecimal.valueOf(minutos).divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);

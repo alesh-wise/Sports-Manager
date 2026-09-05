@@ -20,4 +20,21 @@ public class JwtService {
                 .signWith(chave, SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    public String extrairEmail(String token){
+        return Jwts.parserBuilder()
+                .setSigningKey(chave)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean isTokenValido(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(chave).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }}
 }

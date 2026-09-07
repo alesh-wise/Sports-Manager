@@ -48,6 +48,17 @@ public class ReservaService {
         if (!reserva.getHoraInicio().isBefore(reserva.getHoraFim())) {
             throw new IllegalArgumentException("A hora de início deve ser anterior à hora de fim.");
         }
+
+        boolean sobrepoe = reservaRepo.existsSobreposicao(
+                campo.getId(),
+                reserva.getDia(),
+                reserva.getHoraInicio(),
+                reserva.getHoraFim()
+        );
+        if (sobrepoe) {
+            throw new IllegalArgumentException("Já existe uma reserva neste campo para esse horário.");
+        }
+
         long minutos = ChronoUnit.MINUTES.between(reserva.getHoraInicio(), reserva.getHoraFim());
 
         BigDecimal duracaoHoras = BigDecimal.valueOf(minutos).divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);

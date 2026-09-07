@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -39,14 +41,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             if (jwtService.isTokenValido(jwt)) {
                 String email = jwtService.extrairEmail(jwt);
+                String role = jwtService.extrairRole(jwt); // Lemos o cargo do token!
 
                 if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
+                    // O Spring Security exige que os cargos comecem por "ROLE_"
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
+
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            email, null, new ArrayList<>() // Não temos perfis (Admin/User) por isso a lista vai vazia
+                            email, null, authorities // <-- Agora passamos as autoridades!
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }

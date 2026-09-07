@@ -1,5 +1,6 @@
 package com.sportsmanager.backend.Services;
 
+import com.sportsmanager.backend.Entities.Utilizador;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -12,15 +13,24 @@ public class JwtService {
     private static final String CHAVE_SECRETA = "ChaveSuperSecretaParaGestaoDeDesporto2026";
     private final Key chave = Keys.hmacShaKeyFor(CHAVE_SECRETA.getBytes());
 
-    public String gerarToken(String email) {
+    public String gerarToken(Utilizador utilizador) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(utilizador.getEmail())
+                .claim("role", utilizador.getRole())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 horas
                 .signWith(chave, SignatureAlgorithm.HS256)
                 .compact();
     }
 
+    public String extrairRole(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(chave)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("role", String.class);
+    }
     public String extrairEmail(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(chave)

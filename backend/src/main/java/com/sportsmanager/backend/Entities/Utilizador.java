@@ -13,6 +13,10 @@ public class Utilizador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoRole role;
+
     @Column(nullable = false)
     private String name;
 
@@ -25,12 +29,34 @@ public class Utilizador {
     @Column(nullable = false)
     private String password;
 
+    @Column(length = 9)
+    private String nif;
+
+    @OneToMany(mappedBy = "utilizador")
+    private List<Fatura> faturas;
+
     public Utilizador(){}
 
     public Utilizador(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+
+    public List<Fatura> getFaturas() {
+        return faturas;
+    }
+
+    public void setFaturas(List<Fatura> faturas) {
+        this.faturas = faturas;
     }
 
     public List<Reserva> getReservas() {
@@ -71,5 +97,13 @@ public class Utilizador {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public TipoRole getRole() {
+        return role;
+    }
+
+    public void setRole(TipoRole role) {
+        this.role = role;
     }
 }

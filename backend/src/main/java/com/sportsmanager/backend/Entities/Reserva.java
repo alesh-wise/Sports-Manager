@@ -1,6 +1,7 @@
 package com.sportsmanager.backend.Entities;
 
 import jakarta.persistence.*;
+import org.hibernate.engine.internal.Cascade;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +9,9 @@ import java.time.LocalTime;
 
 @Entity
 public class Reserva {
+
+    @OneToOne(mappedBy = "reserva", cascade= CascadeType.ALL)
+    private Fatura fatura;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +39,14 @@ public class Reserva {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal precoTotal;
 
+    public Fatura getFatura() {
+        return fatura;
+    }
+
+    public void setFatura(Fatura fatura) {
+        this.fatura = fatura;
+    }
+
     public Reserva() {}
 
     public Reserva(Utilizador utilizador, Campo campo,LocalDate dataReserva, LocalTime horaInicio, LocalTime horaFim,  BigDecimal precoTotal) {
@@ -44,6 +56,14 @@ public class Reserva {
         this.horaInicio = horaInicio;
         this.horaFim = horaFim;
         this.precoTotal = precoTotal;
+    }
+
+    public Utilizador getUtilizador() {
+        return utilizador;
+    }
+
+    public void setUtilizador(Utilizador utilizador) {
+        this.utilizador = utilizador;
     }
 
     public BigDecimal getPrecoTotal() {

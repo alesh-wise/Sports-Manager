@@ -6,7 +6,6 @@ import com.sportsmanager.backend.Exceptions.EntidadeNaoEncontrada;
 import com.sportsmanager.backend.Mappers.FaturaMapper;
 import com.sportsmanager.backend.Repositories.FaturaRepo;
 import com.sportsmanager.backend.Services.FaturaService;
-import com.sportsmanager.backend.Services.ReservaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -2,6 +2,7 @@ package com.sportsmanager.backend.Services;
 
 import com.sportsmanager.backend.Dto.UtilizadorCreateDto;
 import com.sportsmanager.backend.Dto.UtilizadorResponseDto;
+import com.sportsmanager.backend.Entities.TipoRole;
 import com.sportsmanager.backend.Entities.Utilizador;
 import com.sportsmanager.backend.Mappers.UtilizadorMapper;
 import com.sportsmanager.backend.Repositories.UserRepo;
@@ -29,6 +30,8 @@ public class UserService {
 
         String passwordEncriptada = passwordEncoder.encode(utilizador.getPassword());
         user.setPassword(passwordEncriptada);
+
+        user.setRole(TipoRole.USER);
 
         Utilizador userGuardado = userRepo.save(user);
 

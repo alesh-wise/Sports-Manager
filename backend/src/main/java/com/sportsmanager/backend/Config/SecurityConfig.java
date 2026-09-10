@@ -34,14 +34,17 @@ public class SecurityConfig {
 
                 // Regras das Portas da Aplicação
                 .authorizeHttpRequests(auth -> auth
-                        // Deixar toda a gente fazer Login
                         .requestMatchers("/auth/login").permitAll()
-                        // Deixar toda a gente criar conta (Registar)
                         .requestMatchers(HttpMethod.POST, "/utilizadores").permitAll()
-                        // EXIGIR TOKEN VÁLIDO PARA ABSOLUTAMENTE TUDO O RESTO
+
+                        // Exemplo: Todos podem ver os campos (GET)
+                        .requestMatchers(HttpMethod.GET, "/campos/**").permitAll()
+
+                        // Exemplo VIP: Só o ADMIN pode criar campos novos (POST)
+                        .requestMatchers(HttpMethod.POST, "/campos").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
-                )
-                // Colocamos o nosso Segurança à porta (antes de qualquer filtro do Spring)
+                )// Colocamos o nosso Segurança à porta (antes de qualquer filtro do Spring)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

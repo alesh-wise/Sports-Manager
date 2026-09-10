@@ -9,6 +9,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface UtilizadorMapper {
+
     UtilizadorResponseDto toDto(Utilizador utilizador);
 
     @Mapping(target ="password", ignore =true)

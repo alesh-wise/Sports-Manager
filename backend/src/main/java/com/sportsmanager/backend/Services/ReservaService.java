@@ -10,6 +10,7 @@ import com.sportsmanager.backend.Entities.Utilizador;
 import com.sportsmanager.backend.Exceptions.EntidadeNaoEncontrada;
 import com.sportsmanager.backend.Mappers.ReservaMapper;
 import com.sportsmanager.backend.Repositories.CampoRepo;
+import com.sportsmanager.backend.Repositories.FaturaRepo;
 import com.sportsmanager.backend.Repositories.ReservaRepo;
 import com.sportsmanager.backend.Repositories.UserRepo;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,15 @@ public class ReservaService {
     private ReservaRepo reservaRepo;
     private UserRepo userRepo;
     private CampoRepo campoRepo;
+    private FaturaService faturaService;
     private final ReservaMapper reservaMapper;
 
-    public ReservaService(ReservaRepo reservaRepo, UserRepo userRepo, CampoRepo campoRepo, ReservaMapper reservaMapper) {
+    public ReservaService(FaturaService faturaService, ReservaRepo reservaRepo, UserRepo userRepo, CampoRepo campoRepo, ReservaMapper reservaMapper) {
         this.reservaRepo = reservaRepo;
         this.userRepo = userRepo;
         this.campoRepo = campoRepo;
         this.reservaMapper = reservaMapper;
+        this.faturaService = faturaService;
     }
 
     public ReservaResponseDto criarReserva(ReservaCreateDto reserva, String emailUtilizador){
@@ -45,6 +48,17 @@ public class ReservaService {
         if (!reserva.getHoraInicio().isBefore(reserva.getHoraFim())) {
             throw new IllegalArgumentException("A hora de início deve ser anterior à hora de fim.");
         }
+
+        boolean sobrepoe = reservaRepo.existsSobreposicao(
+                campo.getId(),
+                reserva.getDia(),
+                reserva.getHoraInicio(),
+                reserva.getHoraFim()
+        );
+        if (sobrepoe) {
+            throw new IllegalArgumentException("Já existe uma reserva neste campo para esse horário.");
+        }
+
         long minutos = ChronoUnit.MINUTES.between(reserva.getHoraInicio(), reserva.getHoraFim());
 
         BigDecimal duracaoHoras = BigDecimal.valueOf(minutos).divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);
@@ -55,6 +69,7 @@ public class ReservaService {
                 user,campo, reserva.getDia(),reserva.getHoraInicio(),reserva.getHoraFim(),total
         );
         Reserva reservaGuardada = reservaRepo.save(reservafinal);
+        faturaService.gerarFatura(reservaGuardada);
         return reservaMapper.toDto(reservaGuardada);
     }
 

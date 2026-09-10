@@ -10,10 +10,12 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CampoMapper {
 
+    @Mapping(source ="tipo", target ="desporto")
     CampoResponseDto toDto(Campo campo);
 
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "reservas", ignore = true)
+    @Mapping(source ="desporto", target ="tipo")
     Campo toEntity(CampoCreateDto campoCreateDto);
 }

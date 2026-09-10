@@ -24,6 +24,16 @@ public class GlobalHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroDto);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErroResponseDto> lidarArgumentoInvalido(IllegalArgumentException ex){
+        ErroResponseDto erroDto = new ErroResponseDto(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroDto);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> lidarComErrosDeValidacao(MethodArgumentNotValidException ex) {
         Map<String, String> erros = new HashMap<>();

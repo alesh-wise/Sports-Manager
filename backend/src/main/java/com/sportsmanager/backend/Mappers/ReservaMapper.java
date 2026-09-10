@@ -6,6 +6,7 @@ import com.sportsmanager.backend.Dto.ReservaResponseDto;
 import com.sportsmanager.backend.Entities.Reserva;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -14,6 +15,7 @@ import java.util.Locale;
 @Mapper(componentModel = "spring", uses = {UtilizadorMapper.class, CampoMapper.class})
 public interface ReservaMapper {
 
+    @Mapping(source ="id", target ="reservaId")
     @Mapping(source ="precoTotal", target ="valorTotal")
     ReservaResponseDto toDto(Reserva reserva);
 

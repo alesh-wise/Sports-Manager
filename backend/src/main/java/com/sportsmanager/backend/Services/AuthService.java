@@ -29,6 +29,6 @@ public class AuthService {
             throw new EntidadeNaoEncontrada("Email ou palavra-passe incorretos");
         }
 
-        return jwt.gerarToken(dto.getEmail());
+        return jwt.gerarToken(user);
     }
 }
